@@ -1,5 +1,5 @@
 # Platein app
-an app to track dietary progress.
+a web app to track dietary progress and meals.
 
 to run the development server:
 
