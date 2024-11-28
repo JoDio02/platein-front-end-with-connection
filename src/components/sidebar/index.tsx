@@ -52,7 +52,7 @@ const items: ISidebarItem[] = [
         path: "/settings",
       },
       {
-        name: "dietplan",
+        name: "Diet Plan",
         path: "/settings/dietplan",
       },
     ],
