@@ -1,5 +1,5 @@
 'use client';
-import LoginForm from "../../components/loginForm";
+import LoginForm from "../../components/login/LoginForm";
 import "../globals.css";
 import { useRouter } from "next/navigation";
 
@@ -22,7 +22,7 @@ export default function login() {
           <LoginForm/>
           <p className="text-center text-sm text-gray-600">
             Have no Account?
-            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 px-2 hover:underline" onClick={handleClick}>Register</a>
+            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 px-2 hover:underline" onClick={handleClick}>Sign up here</a>
           </p>
       </div>
     </div>
