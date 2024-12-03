@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 const SuccessPage: React.FC = () => {
   const router = useRouter();
 
-  const handleStartClick = () => {
+  const handleStart = () => {
     router.push("/register/gender");
   };
 
@@ -15,7 +15,7 @@ const SuccessPage: React.FC = () => {
       <p className="text-gray-600 mb-6">Let's create your diet profile now</p>
       <div className="flex justify-end mt-6">
         <button
-          onClick={handleStartClick}
+          onClick={handleStart}
           className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 focus:outline-none hover:outline-indigo-900">
           Start
         </button>

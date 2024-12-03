@@ -7,10 +7,10 @@ const Height = () => {
   const router = useRouter();
 
   const handleBack = () => {
-    router.push("/age");
+    router.push("/register/age");
   };
 
-  const handleClick = () => {
+  const handleNext = () => {
     router.push("/register/currentweight");
   };
 
@@ -30,7 +30,7 @@ const Height = () => {
         <h1 className="text-2xl font-bold text-gray-800 mb-2">How tall are you?</h1>
 
         <p className="text-gray-600 mb-6">
-            Height is needed to determine a safe weight loss rate.
+            Height is needed to determine a safe diet plan. (cm)
         </p>
         
         <input 
@@ -42,7 +42,7 @@ const Height = () => {
             
         <button 
             className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none mt-4"
-            onClick={handleClick}>Next
+            onClick={handleNext}>Next
         </button>  
       </div>
     </div>

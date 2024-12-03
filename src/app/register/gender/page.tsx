@@ -8,12 +8,12 @@ import MaleIcon from "@/assets/gender/gender_male.png";
 
 
 const Gender = () => {
-    const [gender, setGender] = useState<string | null>(null);
+    const [gender, setGender] = useState<string>("");
     const router = useRouter();
 
     const handleOptionSelect = (value: string) => {
         setGender(value);
-        console.log("Selected:", value);
+        console.log("Selected: ", value);
         router.push('/register/age');
     };
 

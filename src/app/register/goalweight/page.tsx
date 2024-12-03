@@ -2,20 +2,20 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const Age = () => {
-    const [age, setAge] = useState(0);
+const goalweight = () => {
+    const [goalweight, setGoalweight] = useState(0);
     const router = useRouter();
 
     const handleBack = () => {
-        router.push("/register/gender");
+        router.push("/register/currentweight");
     };
 
     const handleNext = () => {
-        router.push("/register/height");
+        router.push("/register/dailymeals");
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAge(Number(e.target.value));
+        setGoalweight(Number(e.target.value));
     };
 
     return (
@@ -27,16 +27,16 @@ const Age = () => {
           </button>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">How old are you?</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">What is your goal weight?</h1>
 
         <p className="text-gray-600 mb-6">
-            We ask this to establish if certain meals are fit for you.
+            A rough estimate will do - you can always change this later..
         </p>
         
         <input 
             type="number"
             className="appearance-none rounded-md block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={age}
+            value={goalweight}
             onChange={handleInputChange}
             placeholder="I am ... years old."/>
 
@@ -49,4 +49,4 @@ const Age = () => {
     );
 };
 
-export default Age;
+export default goalweight;
