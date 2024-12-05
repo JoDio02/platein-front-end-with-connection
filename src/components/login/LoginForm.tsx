@@ -14,6 +14,9 @@ export default function LoginForm() {
 
 
     const handleClick = () => {
+        if(mail==="admin" && password==="admin"){
+            router.push("/admin/dashboard");
+        }
         router.push("/home");
     };
     return (
