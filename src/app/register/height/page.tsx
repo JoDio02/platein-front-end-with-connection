@@ -10,8 +10,33 @@ const Height = () => {
     router.push("/register/age");
   };
 
-  const handleNext = () => {
-    router.push("/register/currentweight");
+  const handleNext = async() => {
+    try{
+
+      const response = await fetch("http://localhost:5000/api/register/Step4-height",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            height: height
+          }),
+        }
+      )
+      if(response.ok){
+        router.push("/register/currentweight");
+      }else{
+        const errorData = await response.json();
+        alert(`Error: ${errorData.message}`);
+      }
+    }catch(error){
+      console.error("Error:", error);
+      alert("Failed to save height. Please try again.");
+    }
+
+   
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -36,16 +36,32 @@ export default function RegisterForm() {
         .matches(/\d/, "Password must contain at least one number"),
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        validationSchema.validate({ email: formData.email,password: formData.password })
-            .then(() => {
-                router.push('/register/success');
-            })
-            .catch(error => {
-                alert(error.errors.join(", "));
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+    
+        try {
+            await validationSchema.validate({ email: formData.email, password: formData.password });
+    
+            const response = await fetch("http://localhost:5000/api/register/Step1", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             });
+    
+            if (response.ok) {
+                router.push('/register/success');
+            }else{
+                //
+            }
+        } catch (error) {
+            alert(error instanceof Error ? error.message : 'An unexpected error occurred');
+        }
     };
+    
+    
 
     return (
         <div className="max-w-md mx-auto mt-10">

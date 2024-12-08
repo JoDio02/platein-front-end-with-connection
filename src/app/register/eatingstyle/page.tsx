@@ -14,10 +14,36 @@ const eatingstyle = () => {
     const [eatingstyle, seteatingstyle] = useState<string>("");;
     const router = useRouter();
 
-    const handleOptionSelect = (value: string) => {
+    const handleOptionSelect = async (value: string) => {
         seteatingstyle(value);
-        console.log("Selected:", value);
-        router.push('/register/sleepingpatterns');
+
+        try{
+          const response = await fetch("http://localhost:5000/api/register/Step8-eatingstyle",
+            {
+              method: "POST",
+              credentials: "include",
+              headers: { 
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(
+                {
+                    eatingstyle: value,
+                }
+              )
+            }
+          )   
+          if(response.ok){
+            console.log("Selected:", value);
+            router.push('/register/sleepingpatterns');
+          }else{
+            const errorData = await response.json();
+            alert(`Error: ${errorData.message}`);
+          }
+        }catch(error){
+          console.error("Error:", error);
+          alert("Failed to save eatingstyle. Please try again.");
+        }
+
     };
 
     const handleBack = () => {

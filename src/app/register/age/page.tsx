@@ -10,8 +10,29 @@ const Age = () => {
         router.push("/register/gender");
     };
 
-    const handleNext = () => {
-        router.push("/register/height");
+    const handleNext = async () => {
+      console.log("request");
+      try{
+        const response = await fetch("http://localhost:5000/api/register/Step3-age",
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ age:age }),
+          })
+  
+          if(response.ok){
+            router.push("/register/height");
+          }else{
+            const errorData = await response.json();
+            alert(`Error: ${errorData.message}`);
+          }
+      }catch(error){
+        console.error("Error:", error);
+        alert("Failed to save age. Please try again.");
+      }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -10,8 +10,32 @@ const currentweight = () => {
         router.push("/register/height");
     };
 
-    const handleNext = () => {
-        router.push("/register/goalweight");
+    const handleNext = async () => {
+
+      try{
+        const response = await fetch("http://localhost:5000/api/register/Step5-currentweight",
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              currentweight : currentweight
+            }),
+          }
+        )
+        if(response.ok){
+          router.push("/register/goalweight");
+        }else{
+          const errorData = await response.json();
+          alert(`Error: ${errorData.message}`);
+        }
+      }catch(error){
+        console.error("Error:", error);
+        alert("Failed to save height. Please try again.");
+      }
+        
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

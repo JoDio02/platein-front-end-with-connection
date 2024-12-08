@@ -9,13 +9,38 @@ import Noodle3 from "@/assets/noodle/ramen-3.png";
 import Noodle4 from "@/assets/noodle/ramen-4.png";
 
 const dailyMeals = () => {
-    const [dailyMeals, setdailyMeals] = useState<number>(0);;
+    const [dailyMeals, setdailyMeals] = useState<string>("");;
     const router = useRouter();
 
-    const handleOptionSelect = (value: string) => {
-        setdailyMeals(Number(value));
-        console.log("Selected:", value);
-        router.push('/register/eatingstyle');
+    const handleOptionSelect = async (value: string) => {
+
+        setdailyMeals(value);
+
+        try {
+        const response = await fetch("http://localhost:5000/api/register/Step7-dailyMeals",
+                {
+                  method: "POST",
+                  credentials: "include",
+                  headers: { 
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    dailyMeals: value
+                  })
+                }
+            )
+            if(response.ok){
+              console.log("Selected:", value);
+              router.push('/register/eatingstyle');
+            }else{
+              const errorData = await response.json();
+              alert(`Error: ${errorData.message}`);
+            }
+        }catch(error){
+          console.error("Error:", error);
+          alert("Failed to save dailyMeals. Please try again.");
+        }
+
     };
 
     const handleBack = () => {
@@ -32,25 +57,25 @@ const dailyMeals = () => {
             label: "1",
             value: "1",
             icon: <Image src={Noodle1} alt="1meal" className="w-10 h-10" />,
-            isSelected: dailyMeals === 1,
+            isSelected: dailyMeals === "1",
         },
         {
             label: "2",
             value: "2",
             icon: <Image src={Noodle2} alt="2meals" className="w-10 h-10" />,
-            isSelected: dailyMeals === 2,
+            isSelected: dailyMeals === "2",
         },
         {
             label: "3",
             value: "3",
             icon: <Image src={Noodle3} alt="3meals" className="w-10 h-10" />,
-            isSelected: dailyMeals === 3,
+            isSelected: dailyMeals === "3",
         },
         {
             label: "4+",
             value: "4+",
             icon: <Image src={Noodle4} alt="4+meals" className="w-10 h-10" />,
-            isSelected: dailyMeals === 4,
+            isSelected: dailyMeals === "4+",
         }
       ]}
       onOptionSelect={handleOptionSelect} onBack={handleBack}/>
