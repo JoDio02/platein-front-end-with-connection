@@ -9,6 +9,7 @@ import DietVegan from "@/assets/diet/diet-vegan.png";
 import DietVegetarian from "@/assets/diet/diet-vegetarian.png";
 import DietPescatrian from "@/assets/diet/diet-pescatarian.png";
 import DietOther from "@/assets/diet/diet-other.png";
+import { apiRequest } from "@/utils/api/ApiRequest";
 
 const eatingstyle = () => {
     const [eatingstyle, seteatingstyle] = useState<string>("");;
@@ -16,34 +17,12 @@ const eatingstyle = () => {
 
     const handleOptionSelect = async (value: string) => {
         seteatingstyle(value);
-
-        try{
-          const response = await fetch("http://localhost:5000/api/register/Step8-eatingstyle",
-            {
-              method: "POST",
-              credentials: "include",
-              headers: { 
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(
-                {
-                    eatingstyle: value,
-                }
-              )
-            }
-          )   
-          if(response.ok){
-            console.log("Selected:", value);
-            router.push('/register/sleepingpatterns');
-          }else{
-            const errorData = await response.json();
-            alert(`Error: ${errorData.message}`);
-          }
-        }catch(error){
-          console.error("Error:", error);
-          alert("Failed to save eatingstyle. Please try again.");
-        }
-
+        await apiRequest({
+          endpoint: "http://localhost:5000/api/register/Step8-eatingstyle",
+          bodyData: { Eatingstyle: eatingstyle},
+          router,
+          successRoute: "/register/sleepingpatterns",
+        });
     };
 
     const handleBack = () => {

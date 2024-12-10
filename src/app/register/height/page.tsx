@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { apiRequest} from "@/utils/api/ApiRequest"
 
 const Height = () => {
   const [height, setHeight] = useState(0);
@@ -11,32 +12,12 @@ const Height = () => {
   };
 
   const handleNext = async() => {
-    try{
-
-      const response = await fetch("http://localhost:5000/api/register/Step4-height",
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            height: height
-          }),
-        }
-      )
-      if(response.ok){
-        router.push("/register/currentweight");
-      }else{
-        const errorData = await response.json();
-        alert(`Error: ${errorData.message}`);
-      }
-    }catch(error){
-      console.error("Error:", error);
-      alert("Failed to save height. Please try again.");
-    }
-
-   
+    await apiRequest({
+      endpoint: "http://localhost:5000/api/register/Step4-height",
+      bodyData: { Height: height },
+      router,
+      successRoute: "/register/currentweight",
+    });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

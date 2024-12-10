@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Question from "../../../components/register/Question";
 import { useRouter } from "next/navigation";
+import { apiRequest } from "@/utils/api/ApiRequest";
 
 const waterintake = () => {
     const [waterintake, setWaterIntake] = useState<string>("");
@@ -9,36 +10,12 @@ const waterintake = () => {
 
     const handleOptionSelect = async (value: string) => {
         setWaterIntake(value);
-
-        try{
-
-            const response = await fetch("http://localhost:5000/api/register/Step10-waterintake",
-              {
-                method: "POST",
-                credentials: "include",
-                headers: { 
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(
-                  {
-                    waterintake: value,
-                  }
-                )
-              }
-            )   
-            if(response.ok){
-              console.log("Selected:", value);
-              router.push('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
-            }else{
-              const errorData = await response.json();
-              alert(`Error: ${errorData.message}`);
-            }
-          }catch(error){
-            console.error("Error:", error);
-            alert("Failed to save waterintake. Please try again.");
-          }
-
-       
+        await apiRequest({
+          endpoint: "http://localhost:5000/api/register/Step10-waterintake",
+          bodyData: { Waterintake: waterintake},
+          router,
+          successRoute: "/home",
+        });
     };
 
     const handleBack = () => {

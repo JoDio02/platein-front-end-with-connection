@@ -7,40 +7,20 @@ import Noodle1 from "@/assets/noodle/ramen-1.png";
 import Noodle2 from "@/assets/noodle/ramen-2.png";
 import Noodle3 from "@/assets/noodle/ramen-3.png";
 import Noodle4 from "@/assets/noodle/ramen-4.png";
+import { apiRequest } from "@/utils/api/ApiRequest";
 
 const dailyMeals = () => {
     const [dailyMeals, setdailyMeals] = useState<string>("");;
     const router = useRouter();
 
     const handleOptionSelect = async (value: string) => {
-
-        setdailyMeals(value);
-
-        try {
-        const response = await fetch("http://localhost:5000/api/register/Step7-dailyMeals",
-                {
-                  method: "POST",
-                  credentials: "include",
-                  headers: { 
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    dailyMeals: value
-                  })
-                }
-            )
-            if(response.ok){
-              console.log("Selected:", value);
-              router.push('/register/eatingstyle');
-            }else{
-              const errorData = await response.json();
-              alert(`Error: ${errorData.message}`);
-            }
-        }catch(error){
-          console.error("Error:", error);
-          alert("Failed to save dailyMeals. Please try again.");
-        }
-
+      setdailyMeals(value);
+      await apiRequest({
+        endpoint: "http://localhost:5000/api/register/Step7-dailyMeals",
+        bodyData: { DailyMeals: dailyMeals},
+        router,
+        successRoute: "/register/eatingstyle",
+      });
     };
 
     const handleBack = () => {

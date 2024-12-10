@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import LabeledInput from "@/components/register/LabeledInput";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
+import { apiRequest } from "@/utils/api/ApiRequest";
 
 export default function RegisterForm() {
   
@@ -38,31 +39,17 @@ export default function RegisterForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
-        try {
-            await validationSchema.validate({ email: formData.email, password: formData.password });
-    
-            const response = await fetch("http://localhost:5000/api/register/Step1", {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-    
-            if (response.ok) {
-                router.push('/register/success');
-            }else{
-                //
-            }
-        } catch (error) {
-            alert(error instanceof Error ? error.message : 'An unexpected error occurred');
-        }
+        await apiRequest({
+            endpoint: "http://localhost:5000/api/register/Step1",
+            bodyData: { FirstName: formData.firstName,
+                        LastName: formData.lastName,
+                        Email: formData.email,
+                        Password: formData.password},
+            router,
+            successRoute: "/register/success",
+          });
     };
     
-    
-
     return (
         <div className="max-w-md mx-auto mt-10">
         <h1 className="text-center text-2xl font-bold mb-6">Register</h1>

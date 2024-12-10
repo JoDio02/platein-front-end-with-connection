@@ -2,47 +2,24 @@
 import { useState } from "react";
 import Question from "../../../components/register/Question";
 import { useRouter } from "next/navigation";
+import { apiRequest } from "@/utils/api/ApiRequest";
 
 const sleepingpatterns = () => {
     const [sleepingPattern, setSleepingPattern] = useState<string>("");;
     const router = useRouter();
 
     const handleOptionSelect = async (value: string) => {
-
-    setSleepingPattern(value);
-
-    try{
-
-        const response = await fetch("http://localhost:5000/api/register/Step9-sleepingPattern",
-          {
-            method: "POST",
-            credentials: "include",
-            headers: { 
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(
-              {
-                sleepingPattern: value,
-              }
-            )
-          }
-        )   
-        if(response.ok){
-          console.log("Selected:", value);
-          router.push('/register/waterintake');
-        }else{
-          const errorData = await response.json();
-          alert(`Error: ${errorData.message}`);
-        }
-      }catch(error){
-        console.error("Error:", error);
-        alert("Failed to save sleeping pattern. Please try again.");
-      }
-
+      setSleepingPattern(value);
+      await apiRequest({
+        endpoint: "http://localhost:5000/api/register/Step9-sleepingPattern",
+        bodyData: { SleepingPattern: sleepingPattern},
+        router,
+        successRoute: "/register/waterintake",
+      });
     };
 
     const handleBack = () => {
-        router.push('/register/sleepingPattern');
+        router.push('/register/eatingstyle');
     };
 
   return (

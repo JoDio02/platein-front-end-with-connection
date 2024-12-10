@@ -1,49 +1,37 @@
-"use client";
+"use client"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { apiRequest } from "@/utils/api/ApiRequest";
 
 const Age = () => {
-    const [age, setAge] = useState(0);
-    const router = useRouter();
+  const [age, setAge] = useState(0);
+  const router = useRouter();
 
-    const handleBack = () => {
-        router.push("/register/gender");
-    };
+  const handleBack = () => {
+    router.push("/register/gender");
+  };
 
-    const handleNext = async () => {
-      console.log("request");
-      try{
-        const response = await fetch("http://localhost:5000/api/register/Step3-age",
-          {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ age:age }),
-          })
-  
-          if(response.ok){
-            router.push("/register/height");
-          }else{
-            const errorData = await response.json();
-            alert(`Error: ${errorData.message}`);
-          }
-      }catch(error){
-        console.error("Error:", error);
-        alert("Failed to save age. Please try again.");
-      }
-    };
+  const handleNext = async () => {
+    await apiRequest({
+      endpoint: "http://localhost:5000/api/register/Step3-age",
+      bodyData: { Age: age },
+      router,
+      successRoute: "/register/height",
+    });
+  };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAge(Number(e.target.value));
-    };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAge(Number(e.target.value));
+  };
 
-    return (
+  return (
     <div className="flex center mt-10">
       <div className="w-full max-w-lg mx-auto text-center bg-white shadow rounded-lg p-6">
         <div className="flex items-center space-x-2 mb-4">
-          <button onClick={handleBack} className="text-gray-500 hover:text-gray-800 focus:outline-none">
+          <button
+            onClick={handleBack}
+            className="text-gray-500 hover:text-gray-800 focus:outline-none"
+          >
             &larr; Back
           </button>
         </div>
@@ -51,23 +39,26 @@ const Age = () => {
         <h1 className="text-2xl font-bold text-gray-800 mb-2">How old are you?</h1>
 
         <p className="text-gray-600 mb-6">
-            We ask this to establish if certain meals are fit for you.
+          We ask this to establish if certain meals are fit for you.
         </p>
-        
-        <input 
-            type="number"
-            className="appearance-none rounded-md block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={age}
-            onChange={handleInputChange}
-            placeholder="I am ... years old."/>
 
-        <button 
-            className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none mt-4"
-            onClick={handleNext}>Next
-        </button>  
+        <input
+          type="number"
+          className="appearance-none rounded-md block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          value={age}
+          onChange={handleInputChange}
+          placeholder="I am ... years old."
+        />
+
+        <button
+          className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none mt-4"
+          onClick={handleNext}
+        >
+          Next
+        </button>
       </div>
     </div>
-    );
+  );
 };
 
 export default Age;

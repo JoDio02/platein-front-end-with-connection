@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { apiRequest } from "@/utils/api/ApiRequest";
 
 const goalweight = () => {
     const [goalweight, setGoalweight] = useState(0);
@@ -11,31 +12,12 @@ const goalweight = () => {
     };
 
     const handleNext = async () => {
-
-      try{
-        const response = await fetch("http://localhost:5000/api/register/Step6-goalweight",
-          {
-            method: "POST",
-            credentials: "include",
-            headers: { 
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              goalweight: goalweight
-              }),
-          }
-        )
-        if(response.ok){
-          router.push("/register/dailymeals");
-        }else{
-          const errorData = await response.json();
-          alert(`Error: ${errorData.message}`);
-        }
-      }catch(error){
-        console.error("Error:", error);
-        alert("Failed to save goalweight. Please try again.");
-      }
-        
+      await apiRequest({
+        endpoint: "http://localhost:5000/api/register/Step6-goalweight",
+        bodyData: { GoalWeight: goalweight},
+        router,
+        successRoute: "/register/dailymeals",
+      });
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
