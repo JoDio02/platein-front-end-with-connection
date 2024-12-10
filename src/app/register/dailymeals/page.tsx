@@ -13,6 +13,10 @@ const dailyMeals = () => {
     const [dailyMeals, setdailyMeals] = useState<string>("");;
     const router = useRouter();
 
+    const handleBack = () => {
+      router.push('/register/goalweight');
+    };
+
     const handleOptionSelect = async (value: string) => {
       setdailyMeals(value);
       await apiRequest({
@@ -21,10 +25,6 @@ const dailyMeals = () => {
         router,
         successRoute: "/register/eatingstyle",
       });
-    };
-
-    const handleBack = () => {
-        router.push('/register/currentweight');
     };
 
   return (

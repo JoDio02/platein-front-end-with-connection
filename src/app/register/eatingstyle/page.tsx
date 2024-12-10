@@ -15,6 +15,10 @@ const eatingstyle = () => {
     const [eatingstyle, seteatingstyle] = useState<string>("");;
     const router = useRouter();
 
+    const handleBack = () => {
+        router.push('/register/dailymeals');
+    };
+
     const handleOptionSelect = async (value: string) => {
         seteatingstyle(value);
         await apiRequest({
@@ -23,10 +27,6 @@ const eatingstyle = () => {
           router,
           successRoute: "/register/sleepingpatterns",
         });
-    };
-
-    const handleBack = () => {
-        router.push('/register/dailymeals');
     };
 
   return (

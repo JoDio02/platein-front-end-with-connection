@@ -8,6 +8,10 @@ const waterintake = () => {
     const [waterintake, setWaterIntake] = useState<string>("");
     const router = useRouter();
 
+    const handleBack = () => {
+      router.push('/register/sleepingpatterns');
+    };
+
     const handleOptionSelect = async (value: string) => {
         setWaterIntake(value);
         await apiRequest({
@@ -16,10 +20,6 @@ const waterintake = () => {
           router,
           successRoute: "/home",
         });
-    };
-
-    const handleBack = () => {
-        router.push('/register/sleepingpatterns');
     };
 
   return (

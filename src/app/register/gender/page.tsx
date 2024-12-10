@@ -10,6 +10,10 @@ import { apiRequest } from "@/utils/api/ApiRequest";
 const Gender = () => {
   const [gender, setGender] = useState<string>("");
   const router = useRouter();
+  
+  const handleBack = () => {
+    router.push("/register");
+  };
 
   const handleOptionSelect = async (value: string) => {
     setGender(value);
@@ -20,10 +24,6 @@ const Gender = () => {
       router,
       successRoute: "/register/age",
     });
-  };
-
-  const handleBack = () => {
-    router.push("/register");
   };
 
   return (
