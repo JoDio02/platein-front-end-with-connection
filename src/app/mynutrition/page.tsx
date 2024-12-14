@@ -2,8 +2,8 @@
 import GridItem from "@/components/charts/GridItem";
 import LineChart from "@/components/charts/LineChart";
 import PieChart from "@/components/charts/PieChart";
-import TestNutritionDataDaily from "@/components/test/TestNutritionDataDaily";
-import TestMealDataWeekly from "@/components/test/TestMealDataWeekly";
+import TestNutritionDataDaily from "@/testdata/TestNutritionDataDaily";
+import TestMealDataWeekly from "@/testdata/TestMealDataWeekly";
 
 export default function Home() {
     return (

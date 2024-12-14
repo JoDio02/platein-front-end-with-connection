@@ -1,7 +1,3 @@
-import meal1 from "@/assets/meal/meal1.png"
-import meal2 from "@/assets/meal/meal2.png"
-import meal3 from "@/assets/meal/meal3.png"
-
 const TestMealDataList = [
   {
     id: 1,
