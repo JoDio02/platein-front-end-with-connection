@@ -10,7 +10,7 @@ const waterintake = () => {
     const handleOptionSelect = (value: string) => {
         setWaterIntake(Number(value));
         console.log("Selected:", value);
-        router.push('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+        router.push('/home');
     };
 
     const handleBack = () => {
