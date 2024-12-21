@@ -1,23 +1,22 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { apiRequest } from "@/utils/api/ApiRequest";
+import { useDispatch} from "react-redux";
+import { updateUser } from "../redux/userSlice";
+
 
 const goalweight = () => {
     const [goalweight, setGoalweight] = useState(0);
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleBack = () => {
         router.push("/register/currentweight");
     };
 
     const handleNext = async () => {
-      await apiRequest({
-        endpoint: "http://localhost:5000/api/register/Step6-goalweight",
-        bodyData: { GoalWeight: goalweight},
-        router,
-        successRoute: "/register/dailymeals",
-      });
+      dispatch(updateUser({ goalweight:goalweight }));
+      router.push('/register/dailymeals');
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

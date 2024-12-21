@@ -1,23 +1,21 @@
 "use client"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { apiRequest } from "@/utils/api/ApiRequest";
+import { useDispatch} from "react-redux";
+import { updateUser } from "../redux/userSlice";
 
 const Age = () => {
   const [age, setAge] = useState(0);
   const router = useRouter();
-
+  const dispatch = useDispatch();
+  
   const handleBack = () => {
     router.push("/register/gender");
   };
 
   const handleNext = async () => {
-    await apiRequest({
-      endpoint: "http://localhost:5000/api/register/Step3-age",
-      bodyData: { Age: age },
-      router,
-      successRoute: "/register/height",
-    });
+    dispatch(updateUser({ age:age }));
+    router.push('/register/height');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

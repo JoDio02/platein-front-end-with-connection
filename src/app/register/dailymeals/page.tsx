@@ -7,11 +7,14 @@ import Noodle1 from "@/assets/noodle/ramen-1.png";
 import Noodle2 from "@/assets/noodle/ramen-2.png";
 import Noodle3 from "@/assets/noodle/ramen-3.png";
 import Noodle4 from "@/assets/noodle/ramen-4.png";
-import { apiRequest } from "@/utils/api/ApiRequest";
+import { useDispatch} from "react-redux";
+import { updateUser } from "../redux/userSlice";
+
 
 const dailyMeals = () => {
     const [dailyMeals, setdailyMeals] = useState<string>("");;
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleBack = () => {
       router.push('/register/goalweight');
@@ -19,12 +22,8 @@ const dailyMeals = () => {
 
     const handleOptionSelect = async (value: string) => {
       setdailyMeals(value);
-      await apiRequest({
-        endpoint: "http://localhost:5000/api/register/Step7-dailyMeals",
-        bodyData: { DailyMeals: dailyMeals},
-        router,
-        successRoute: "/register/eatingstyle",
-      });
+      dispatch(updateUser({ dailyMeals:value }));
+      router.push('/register/eatingstyle');
     };
 
   return (

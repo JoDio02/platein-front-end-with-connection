@@ -5,25 +5,22 @@ import { useRouter } from "next/navigation";
 import Question from "../../../components/register/Question";
 import FemaleIcon from "@/assets/gender/gender_female.png";
 import MaleIcon from "@/assets/gender/gender_male.png";
-import { apiRequest } from "@/utils/api/ApiRequest";
+import { useDispatch} from "react-redux";
+import { updateUser } from "../redux/userSlice";
 
 const Gender = () => {
   const [gender, setGender] = useState<string>("");
   const router = useRouter();
-  
+  const dispatch = useDispatch();
+
   const handleBack = () => {
     router.push("/register");
   };
 
   const handleOptionSelect = async (value: string) => {
     setGender(value);
-
-    await apiRequest({
-      endpoint: "http://localhost:5000/api/register/Step2-gender",
-      bodyData: { Gender: value },
-      router,
-      successRoute: "/register/age",
-    });
+    dispatch(updateUser({ gender:value }));
+    router.push('/register/age');
   };
 
   return (

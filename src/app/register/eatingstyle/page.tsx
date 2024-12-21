@@ -9,11 +9,14 @@ import DietVegan from "@/assets/diet/diet-vegan.png";
 import DietVegetarian from "@/assets/diet/diet-vegetarian.png";
 import DietPescatrian from "@/assets/diet/diet-pescatarian.png";
 import DietOther from "@/assets/diet/diet-other.png";
-import { apiRequest } from "@/utils/api/ApiRequest";
+import { useDispatch} from "react-redux";
+import { updateUser } from "../redux/userSlice";
+
 
 const eatingstyle = () => {
     const [eatingstyle, seteatingstyle] = useState<string>("");;
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleBack = () => {
         router.push('/register/dailymeals');
@@ -21,12 +24,8 @@ const eatingstyle = () => {
 
     const handleOptionSelect = async (value: string) => {
         seteatingstyle(value);
-        await apiRequest({
-          endpoint: "http://localhost:5000/api/register/Step8-eatingstyle",
-          bodyData: { Eatingstyle: eatingstyle},
-          router,
-          successRoute: "/register/sleepingpatterns",
-        });
+        dispatch(updateUser({ eatingStyle:value }));
+        router.push('/register/sleepingpatterns');
     };
 
   return (

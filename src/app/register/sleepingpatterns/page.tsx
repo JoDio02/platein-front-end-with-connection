@@ -2,11 +2,13 @@
 import { useState } from "react";
 import Question from "../../../components/register/Question";
 import { useRouter } from "next/navigation";
-import { apiRequest } from "@/utils/api/ApiRequest";
+import { useDispatch} from "react-redux";
+import { updateUser } from "../redux/userSlice";
 
 const sleepingpatterns = () => {
     const [sleepingPattern, setSleepingPattern] = useState<string>("");;
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleBack = () => {
       router.push('/register/eatingstyle');
@@ -14,12 +16,8 @@ const sleepingpatterns = () => {
 
     const handleOptionSelect = async (value: string) => {
       setSleepingPattern(value);
-      await apiRequest({
-        endpoint: "http://localhost:5000/api/register/Step9-sleepingPattern",
-        bodyData: { SleepingPattern: sleepingPattern},
-        router,
-        successRoute: "/register/waterintake",
-      });
+      dispatch(updateUser({ sleepingPattern:value }));
+      router.push('/register/waterintake');
     };
 
   return (

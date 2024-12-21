@@ -1,8 +1,8 @@
 interface ApiRequestOptions<T = any> {
-    endpoint: string;
-    bodyData: T;
-    router: any;
-    successRoute: string;
+    endpoint: string; //api endpoint URL
+    bodyData: T; // Data to be sent
+    router: any; // router obj
+    successRoute: string; 
     onError?: (error: any) => void;
   }
   

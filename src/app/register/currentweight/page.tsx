@@ -1,23 +1,21 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { apiRequest } from "@/utils/api/ApiRequest";
+import { useDispatch} from "react-redux";
+import { updateUser } from "../redux/userSlice";
 
 const currentweight = () => {
     const [currentweight, setCurrentweight] = useState(0);
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleBack = () => {
         router.push("/register/height");
     };
 
     const handleNext = async () => {
-      await apiRequest({
-        endpoint: "http://localhost:5000/api/register/Step5-currentweight",
-        bodyData: { CurrentWeight: currentweight},
-        router,
-        successRoute: "/register/goalweight",
-      });
+      dispatch(updateUser({ currentweight:currentweight }));
+      router.push('/register/goalweight');
     };
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentweight(Number(e.target.value));

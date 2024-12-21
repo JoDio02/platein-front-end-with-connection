@@ -1,23 +1,21 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { apiRequest} from "@/utils/api/ApiRequest"
+import { useDispatch} from "react-redux";
+import { updateUser } from "../redux/userSlice";
 
 const Height = () => {
   const [height, setHeight] = useState(0);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleBack = () => {
     router.push("/register/age");
   };
 
   const handleNext = async() => {
-    await apiRequest({
-      endpoint: "http://localhost:5000/api/register/Step4-height",
-      bodyData: { Height: height },
-      router,
-      successRoute: "/register/currentweight",
-    });
+      dispatch(updateUser({ height:height }));
+      router.push('/register/currentweight');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

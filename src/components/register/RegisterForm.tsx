@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import LabeledInput from "@/components/register/LabeledInput";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
-import { apiRequest } from "@/utils/api/ApiRequest";
+import { useDispatch} from "react-redux";
+import { updateUser } from "../../app/register/redux/userSlice";
 
 export default function RegisterForm() {
   
@@ -14,6 +15,7 @@ export default function RegisterForm() {
         email: "",
         password: "",
     });
+    const dispatch = useDispatch();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
@@ -39,15 +41,11 @@ export default function RegisterForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await apiRequest({
-            endpoint: "http://localhost:5000/api/register/Step1",
-            bodyData: { FirstName: formData.firstName,
-                        LastName: formData.lastName,
-                        Email: formData.email,
-                        Password: formData.password},
-            router,
-            successRoute: "/register/success",
-          });
+        dispatch(updateUser({ firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            password: formData.password }));
+        router.push('/register/success');
     };
     
     return (
