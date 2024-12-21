@@ -25,7 +25,6 @@ export default function LoginForm() {
                     password: password
                 }),
             });
-
             if (response.ok) {
                 const data = await response.json();
                 if(data.isAdmin){

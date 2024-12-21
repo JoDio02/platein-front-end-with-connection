@@ -11,7 +11,6 @@ const waterintake = () => {
     const [waterintake, setWaterIntake] = useState<string>("");
     const router = useRouter();
     const dispatch = useDispatch();
-
     const handleBack = () => {
       router.push('/register/sleepingpatterns');
     };

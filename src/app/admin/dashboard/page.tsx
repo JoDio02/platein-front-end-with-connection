@@ -1,7 +1,7 @@
 export default function Home() {
     return (
       <div className = "flex justify-center center">
-        Settings - General
+        Admin dasboard Page
       </div>
     );
   }
